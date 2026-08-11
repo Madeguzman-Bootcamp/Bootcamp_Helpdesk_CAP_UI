@@ -1,0 +1,5 @@
+ID;ticketNumber;subject;description;status;priority;category_ID;agent_ID
+ba59a515-a6a2-40e8-9bbc-383cff637cea;TCK-001;Laptop not booting;User reports laptop won't start;OPEN;HIGH;db2fa373-5070-457d-88cd-d4b81afadac7;039f2b3f-c9d9-4021-a2e3-468817ea488f
+e98bc6fe-5bc5-45e5-b256-607af5789a30;TCK-002;VPN not working;Cannot connect to VPN;IN_PROGRESS;MEDIUM;57178c4c-66eb-4a56-9f87-4bf196e56e66;c44f131e-16cd-43b1-a282-f20df2a8d6fc
+260d2425-9b8a-4765-92fa-c5e61dd2917d;TCK-003;Email access issue;User cannot login to email;OPEN;URGENT;2af7bad2-3b14-4f13-a513-127f0f30f267;da5ff773-9cfa-4887-a0af-f62dc39e505c
+6ce5f2b5-afc3-449f-9540-000a835e3f56;TCK-004;Software installation;Need installation of Adobe;RESOLVED;LOW;4b91ba89-d186-483a-b15c-64fd59585410;b6abce2d-c71c-4764-b1a5-0b95bf39349e

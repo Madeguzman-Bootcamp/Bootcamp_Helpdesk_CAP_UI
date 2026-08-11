@@ -1,0 +1,102 @@
+@host = http://localhost:4004
+@service = {host}/odata/v4/helpdesk
+
+
+
+### Create a new ticket
+POST {{service}}/Tickets
+Content-Type: application/json
+
+{
+  "ticketNumber": "TCK-010",
+  "subject": "Monitor flickering",
+  "description": "Screen flickers intermittently",
+  "status": "OPEN",
+  "priority": "MEDIUM",
+  "category_ID": "db2fa373-5070-457d-88cd-d4b81afadac7",
+  "agent_ID": "c44f131e-16cd-43b1-a282-f20df2a8d6fc"
+}
+####
+
+### Missing subject (should trigger before CREATE validation)
+POST {{service}}/Tickets
+Content-Type: application/json
+
+{
+  "ticketNumber": "TCK-011",
+  "description": "Subject missing test",
+  "status": "OPEN",
+  "priority": "LOW",
+  "category_ID": "db2fa373-5070-457d-88cd-d4b81afadac7"
+}
+####
+### Missing category (should trigger before CREATE validation)
+POST {{service}}/Tickets
+Content-Type: application/json
+
+{
+  "ticketNumber": "TCK-012",
+  "subject": "Missing category test",
+  "description": "Category missing test",
+  "status": "OPEN",
+  "priority": "LOW"
+}
+####
+### Close ticket ba59a515-a6a2-40e8-9bbc-383cff637cea (should succeed)
+PATCH {{service}}/Tickets(ba59a515-a6a2-40e8-9bbc-383cff637cea)
+Content-Type: application/json
+
+{
+  "status": "CLOSED"
+}
+####
+### Close ticket 6ce5f2b5-afc3-449f-9540-000a835e3f56 again (should fail because t4 is RESOLVED or CLOSED)
+PATCH {{service}}/Tickets(6ce5f2b5-afc3-449f-9540-000a835e3f56)
+Content-Type: application/json
+
+{
+  "status": "CLOSED"
+}
+###
+### Custom action: closeTicket
+POST {{service}}/closeTicket
+Content-Type: application/json
+
+{
+  "ticketID": "e98bc6fe-5bc5-45e5-b256-607af5789a30",
+  "resolution": "VPN configuration reset and user notified."
+}
+####
+### Missing resolution (should fail)
+POST {{service}}/closeTicket
+Content-Type: application/json
+
+{
+  "ticketID": "e98bc6fe-5bc5-45e5-b256-607af5789a30",
+}
+###
+### Custom action: reassignTicket
+POST {{service}}/reassignTicket
+Content-Type: application/json
+
+{
+  "ticketID": "260d2425-9b8a-4765-92fa-c5e61dd2917d",
+  "agentID": "039f2b3f-c9d9-4021-a2e3-468817ea488f"
+}
+###
+### Invalid agent (should fail)
+POST {{service}}/reassignTicket
+Content-Type: application/json
+
+{
+  "ticketID": "260d2425-9b8a-4765-92fa-c5e61dd2917d",
+  "agentID": "invalid-agent"
+}
+###
+### Count all tickets
+GET {{service}}/getTicketCount()
+###
+
+### Count only OPEN tickets
+GET {{service}}/getTicketCount()(status='OPEN')
+###
